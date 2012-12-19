@@ -21,7 +21,7 @@ from pattern.metrics import avg, test, agreement
 
 # Load the sentiment lexicon.
 sentiment = {}
-for row in Datasheet.load("sentiment - Sheet 1.csv", headers=True):
+for row in Datasheet.load("sentiment.csv - Sheet 1.csv", headers=True):
     scores = [float(x) for x in row[3:] if x != ""] # Exclude empty fields.
     if scores:
         sentiment[row[0]] = avg(scores)
@@ -61,7 +61,7 @@ print
 # We want to know the general agreement of positive (+1) vs. negative (-1).
 # If the agreement is low, that means the sentiment lexicon is biased,
 # since the annotators did not agree on all scores.
-scores = Datasheet.load("sentiment - Sheet 1.csv", headers=True)
+scores = Datasheet.load("sentiment.csv - Sheet 1.csv", headers=True)
 # 1) Cut off the first three columns.
 scores = scores[:,3:]
 # 2) Remove empty fields (= annotator did not enter a score for this adjective).
@@ -79,3 +79,8 @@ try:
 except:
     pass
 
+# Can you think of ways to make the positive() function better?
+# - Should we do something with exclamation marks? (e.g., "belle" <=> "belle!")
+# - Should we do something with adverbs? (e.g., "belle" <=> "tres belle")
+# - Should we process emoticons? Verbs? 
+# - ...
